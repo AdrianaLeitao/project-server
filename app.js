@@ -24,9 +24,6 @@ app.use("/api", allRoutes);
 const profileRoutes = require("./routes/profile.routes");
 app.use("/api", profileRoutes);
 
-const editprofileRoutes = require("./routes/editprofile.routes");
-app.use("/api", editprofileRoutes);
-
 const memoriesRoutes = require("./routes/memories.routes");
 app.use("/api", memoriesRoutes);
 

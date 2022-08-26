@@ -1,18 +1,9 @@
 const router = require("express").Router();
 const mongoose = require("mongoose");
-//const isLoggedIn = require("../middleware/isLoggedIn");
 const User = require("../models/User.model");
 
 
-router.post('/profile', (req, res, next) => {
-    const {username, email, password, imageProfile, country} = req.body;
-
-    User.create({username, email, password, imageProfile, country})
-    .then((response) => res.json(response))
-    .catch((err) => res.json(err));
-});
-
-router.get("/profile", (req, res, next) => {
+router.get("/profile/:userId", (req, res, next) => {
     const {userId} = req.params;
 
     User.findById(userId)
@@ -20,24 +11,24 @@ router.get("/profile", (req, res, next) => {
     .catch((err) => res.json(err))
 });
 
-router.put("/profile/edit", (req,res,next) => {
+router.put("/profile/edit/:userId", (req,res,next) => {
     const {userId} = req.params;
-    const {username, email, password, imageProfile, country} = req.body;
+    const {username, email, imageProfile, country} = req.body;
 
     User.findByIdAndUpdate(
         userId,
-			{ username, email, password, imageProfile, country },
+			{ username, email, imageProfile, country },
 			{ new: true }
     )
-        .then((user) => res.status(200).json(user))
-        .catch((err) => res.json(err))
+    .then((user) => res.status(200).json(user))
+    .catch((err) => res.json(err))
 });
 
-router.delete("/profile/delete", (req, res, next) => {
+router.delete("/profile/delete/:userId", (req, res, next) => {
     const {userId} = req.params;
 
     User.findByIdAndRemove(userId)
-    .then(() => res.redirect("/memories"))
+    .then(() => res.json({message: "Deleted"}))
     .catch((err) => res.json(err))
 });
 

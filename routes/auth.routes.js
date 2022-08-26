@@ -14,7 +14,7 @@ const User = require("../models/User.model");
 const {isAuthenticated} = require("../middleware/jwt.middleware");
 
 router.get("/verify", isAuthenticated, (req, res) => {
-  console.log("the token: (or not)",req.payload);
+  console.log("the token: (or not)", req.payload);
 
   res.status(200).json(req.payload);
 });
