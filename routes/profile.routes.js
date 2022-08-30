@@ -28,7 +28,7 @@ router.delete("/profile/delete/:userId", (req, res, next) => {
     const {userId} = req.params;
 
     User.findByIdAndRemove(userId)
-    .then(() => res.json({message: "Deleted"}))
+    .then(() => res.json({message: "User deleted"}))
     .catch((err) => res.json(err))
 });
 
