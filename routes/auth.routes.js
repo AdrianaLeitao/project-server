@@ -20,7 +20,7 @@ router.get("/verify", isAuthenticated, (req, res) => {
 });
 
 router.post("/signup", (req, res) => {
-  const { username, email, password, country } = req.body;
+  const { username, email, password, country, imageProfile } = req.body;
 
   if (!username) {
     return res
@@ -40,6 +40,11 @@ router.post("/signup", (req, res) => {
       .json({ errorMessage: "Please provide your country." });
   }
 
+  if (!imageProfile) {
+    return res
+      .status(400)
+      .json({ errorMessage: "Please provide your image." });
+  }
 
   if (password.length < 8) {
     return res
@@ -63,6 +68,7 @@ router.post("/signup", (req, res) => {
           email,
           password: hashedPassword,
           country,
+          imageProfile,
         });
       })
       .then((user) => {
