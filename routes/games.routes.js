@@ -3,9 +3,12 @@ const mongoose = require("mongoose");
 const Game = require("../models/Game.model");
 
 router.post('/games', (req, res, next) => {
-    const {img, name, description, howPlay, extinct} = req.body;
+    const {img, name, description, howPlay, creator} = req.body;
 
-    Game.create({img, name, description, howPlay, extinct})
+    Game.create({img, name, description, howPlay})
+    .then((newGame) => {
+        return Game.findByIdAndUpdate(gamesId, {$push : {games: newGame._id}});
+    })
     .then((response) => res.json(response))
     .catch((err) => res.json(err));
 });
@@ -24,9 +27,9 @@ router.get('/games/:gameId', (req, res, next) => {
 
 router.put('/games/edit/:gameId', (req, res, next) => {
     const {gameId} = req.params;
-    const {img, name, description, howPlay, extinct} = req.body;
+    const {img, name, description, howPlay} = req.body;
 
-    Game.findByIdAndUpdate(gameId, {img, name, description, howPlay, extinct}, {new: true})
+    Game.findByIdAndUpdate(gameId, {img, name, description, howPlay }, {new: true})
     .then((game) => res.status(200).json(game))
     .catch((err) => res.json(err))
 });

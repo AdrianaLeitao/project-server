@@ -6,6 +6,9 @@ router.post('/dance', (req, res, next) => {
     const {image, name, description, video, duration} = req.body;
 
     Dance.create({image, name, description, video, duration})
+    .then((newDance) => {
+        return Dance.findByIdAndUpdate(dancesId, {$push : {dance: newDance._id}});
+    })
     .then((response) => res.json(response))
     .catch((err) => res.json(err));
 });

@@ -16,7 +16,6 @@ const gameSchema = new Schema(
     type: String, 
     required: true 
   },
-  extinct: Boolean,
 },
   {
     timestamps: true,

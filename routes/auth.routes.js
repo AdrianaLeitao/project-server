@@ -75,6 +75,7 @@ router.post("/signup", (req, res) => {
         res.status(201).json(user);
       })
       .catch((error) => {
+        console.log(error)
         if (error instanceof mongoose.Error.ValidationError) {
           return res.status(400).json({ errorMessage: error.message });
         }

@@ -7,6 +7,7 @@ router.get("/profile/:userId", (req, res, next) => {
     const {userId} = req.params;
 
     User.findById(userId)
+    .populate("games dances")
     .then((user) => res.status(200).json(user))
     .catch((err) => res.json(err))
 });
